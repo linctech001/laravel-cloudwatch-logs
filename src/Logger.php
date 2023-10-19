@@ -24,7 +24,7 @@ class Logger
         }
 
         $loggingConfig = $config;
-        $cwClient = new CloudWatchLogsClient($this->getCredentials());
+        $cwClient = new CloudWatchLogsClient($this->getCredentials($loggingConfig));
 
         $streamName = $loggingConfig['stream_name'];
         $retentionDays = $loggingConfig['retention'];
@@ -45,7 +45,7 @@ class Logger
      * This is the way config should be defined in config/logging.php
      * in key cloudwatch.
      *
-     * 'cloudwatch' => [
+     * 'XXXXX - your name' => [
      *      'driver' => 'custom',
      *     'name' => env('CLOUDWATCH_LOG_NAME', ''),
      *     'region' => env('CLOUDWATCH_LOG_REGION', ''),
@@ -64,15 +64,16 @@ class Logger
      *
      * @throws \Linctech\Exceptions\IncompleteCloudWatchConfig
      */
-    protected function getCredentials()
+    protected function getCredentials($cloudWatchConfigs)
     {
-        $loggingConfig = $this->app->make('config')->get('logging.channels');
+        // $loggingConfig = $this->app->make('config')->get('logging.channels');
 
-        if (!isset($loggingConfig['cloudwatch'])) {
-            throw new IncompleteCloudWatchConfig('Configuration Missing for Cloudwatch Log');
-        }
+        // if (!isset($loggingConfig['cloudwatch'])) {
+        //     throw new IncompleteCloudWatchConfig('Configuration Missing for Cloudwatch Log');
+        // }
 
-        $cloudWatchConfigs = $loggingConfig['cloudwatch'];
+        // $cloudWatchConfigs = $loggingConfig['cloudwatch'];
+        // var_dump($cloudWatchConfigs);exit;
 
         if (!isset($cloudWatchConfigs['region'])) {
             throw new IncompleteCloudWatchConfig('Missing region key-value');
